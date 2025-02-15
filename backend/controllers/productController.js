@@ -17,7 +17,7 @@ export const getProducts = async (req, res) => {
 export const createProduct = async (req, res) => {
   const { name, country, image } = req.body;
 
-  if (!name || !price || !image) {
+  if (!name || !country || !image) {
     return res
       .status(400)
       .json({ success: false, message: "All fields are required" });
