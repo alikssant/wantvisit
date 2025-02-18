@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { usePlaceStore } from "../store/useProductStore";
+import { usePlaceStore } from "../store/usePlaceStore";
 import { PackageIcon, PlusCircleIcon, RefreshCwIcon } from "lucide-react";
 import PlaceCard from "../components/PlaceCard";
 function HomePage() {

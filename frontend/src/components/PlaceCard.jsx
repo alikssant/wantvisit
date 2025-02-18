@@ -1,7 +1,9 @@
 import { EditIcon, Trash2Icon } from "lucide-react";
 import { Link } from "react-router-dom";
+import { usePlaceStore } from "../store/usePlaceStore";
 
 function PlaceCard({ place }) {
+  const { deletePlace } = usePlaceStore();
   return (
     <div className="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-300">
       {/* Place image */}
@@ -27,7 +29,10 @@ function PlaceCard({ place }) {
             <EditIcon className="size-4" />
           </Link>
 
-          <button className="btn btn-sm btn-error btn-outline">
+          <button
+            className="btn btn-sm btn-error btn-outline"
+            onClick={() => deletePlace(place.id)}
+          >
             <Trash2Icon className="size-4" />
           </button>
         </div>

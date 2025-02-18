@@ -1,8 +1,9 @@
 import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
-import ProductPage from "./pages/ProductPage";
+import PlacePage from "./pages/PlacePage";
 import { Routes, Route } from "react-router-dom";
 import { useThemeStore } from "./store/useThemeStore";
+import { Toaster } from "react-hot-toast";
 function App() {
   const { theme } = useThemeStore();
   return (
@@ -14,8 +15,10 @@ function App() {
 
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/product/:id" element={<ProductPage />} />
+        <Route path="/product/:id" element={<PlacePage />} />
       </Routes>
+
+      <Toaster />
     </div>
   );
 }

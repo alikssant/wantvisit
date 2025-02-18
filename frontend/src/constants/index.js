@@ -9,11 +9,6 @@ export const THEMES = [
     label: "Coffee",
     colors: ["#20161F", "#A67C58", "#807666"],
   },
-  {
-    name: "forest",
-    label: "Forest",
-    colors: ["#171212", "#2B4C3F", "#6BAA75"],
-  },
 
   {
     name: "luxury",
