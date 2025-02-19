@@ -17,8 +17,8 @@ function PlaceCard({ place }) {
 
       <div className="card-body">
         {/* Place info */}
-        <h2 className="card-title text-lg font-semibold">{place.name}</h2>
-        <p className="text-2xl font-bold text-primary">{place.country}</p>
+        <h2 className="card-title text-2xl font-semibold">{place.name}</h2>
+        <p className="text-xl font-bold text-primary">{place.country}</p>
 
         {/* Card actions */}
         <div className="card-actions justify-end mt-4">

@@ -4,11 +4,40 @@ import toast from "react-hot-toast";
 
 const BASE_URL = "http://localhost:3000";
 
-export const usePlaceStore = create((set) => ({
+export const usePlaceStore = create((set, get) => ({
   //product state
   places: [],
   loading: false,
   error: null,
+
+  //form state
+  formData: {
+    name: "",
+    country: "",
+    image: "",
+  },
+
+  setFormData: (formData) => set({ formData }),
+  resetForm: () => set({ formData: { name: "", country: "", image: "" } }),
+
+  addPlace: async (e) => {
+    e.preventDefault();
+    set({ loading: true });
+
+    try {
+      const { formData } = get();
+      await axios.post(`${BASE_URL}/api/products`, formData);
+      await get().fetchPlaces();
+      get().resetForm();
+      toast.success("Place added successfully");
+      document.getElementById("add_place_modal").closest();
+    } catch (error) {
+      console.log("Error in addPlace function", error);
+      toast.error("Something went wrong");
+    } finally {
+      set({ loading: false });
+    }
+  },
 
   fetchPlaces: async () => {
     set({ loading: true });
@@ -25,13 +54,12 @@ export const usePlaceStore = create((set) => ({
   },
 
   deletePlace: async (id) => {
-    console.log("Attempting to delete place with ID:", id);
     console.log("deleteProduct function called", id);
     set({ loading: true });
     try {
       await axios.delete(`${BASE_URL}/api/products/${id}`);
       set((prev) => ({
-        products: prev.products.filter((product) => product.id !== id),
+        places: prev.places.filter((place) => place.id !== id),
       }));
       toast.success("Place deleted successfully");
     } catch (error) {

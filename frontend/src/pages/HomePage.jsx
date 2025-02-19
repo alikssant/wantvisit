@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { usePlaceStore } from "../store/usePlaceStore";
 import { PackageIcon, PlusCircleIcon, RefreshCwIcon } from "lucide-react";
 import PlaceCard from "../components/PlaceCard";
+import AddPlaceModal from "../components/AddPlaceModal";
 function HomePage() {
   const { places, loading, error, fetchPlaces } = usePlaceStore();
 
@@ -12,7 +13,10 @@ function HomePage() {
   return (
     <main className="max-w-6xl mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-8">
-        <button className="btn btn-primary">
+        <button
+          className="btn btn-primary"
+          onClick={() => document.getElementById("add_place_modal").showModal()}
+        >
           <PlusCircleIcon className="size-5 mr-2" />
           Add Place
         </button>
@@ -20,6 +24,8 @@ function HomePage() {
           <RefreshCwIcon className="size-5" />
         </button>
       </div>
+
+      <AddPlaceModal />
       {error && <div className="alert alert-error mb-8">{error}</div>}
 
       {places.length === 0 && !loading && (
