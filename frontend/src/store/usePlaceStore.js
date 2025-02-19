@@ -9,6 +9,7 @@ export const usePlaceStore = create((set, get) => ({
   places: [],
   loading: false,
   error: null,
+  currentPlace: null,
 
   //form state
   formData: {
@@ -30,7 +31,7 @@ export const usePlaceStore = create((set, get) => ({
       await get().fetchPlaces();
       get().resetForm();
       toast.success("Place added successfully");
-      document.getElementById("add_place_modal").closest();
+      document.getElementById("add_place_modal").close();
     } catch (error) {
       console.log("Error in addPlace function", error);
       toast.error("Something went wrong");
@@ -65,6 +66,41 @@ export const usePlaceStore = create((set, get) => ({
     } catch (error) {
       console.log("Error in deletePlace function", error);
       toast.error("Something went wrong");
+    } finally {
+      set({ loading: false });
+    }
+  },
+
+  fetchPlace: async (id) => {
+    set({ loading: true });
+    try {
+      const response = await axios.get(`${BASE_URL}/api/products/${id}`);
+      set({
+        currentPlace: response.data.data,
+        formData: response.data.data, // pre-fill form with current product data
+        error: null,
+      });
+    } catch (error) {
+      console.log("Error in fetchPlace function", error);
+      set({ error: "Something went wrong", currentPlace: null });
+    } finally {
+      set({ loading: false });
+    }
+  },
+
+  updatePlace: async (id) => {
+    set({ loading: true });
+    try {
+      const { formData } = get();
+      const response = await axios.put(
+        `${BASE_URL}/api/products/${id}`,
+        formData
+      );
+      set({ currentPlace: response.data.data });
+      toast.success("Place updated successfully");
+    } catch (error) {
+      toast.error("Something went wrong");
+      console.log("Error in updatePlace function", error);
     } finally {
       set({ loading: false });
     }
